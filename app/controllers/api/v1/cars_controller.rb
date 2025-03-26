@@ -3,13 +3,11 @@ module Api
     class CarsController < ApplicationController
       def index
         cars = Car.all
-
         render json: CarSerializer.new(cars, options).serialized_json
       end
 
       def show
         car = Car.find_by(slug: params[:slug])
-
         render json: CarSerializer.new(car).serialized_json
       end
 
@@ -17,9 +15,9 @@ module Api
         car = Car.new(car_params)
 
         if car.save
-          render json: CarSerializer.new (car).serialized_json
+          render json: CarSerializer.new(car).serialized_json
         else
-          render json: { error: car.errors.messages }, 
+          render json: { error: car.errors.messages }, status: 422
         end
       end
 
@@ -27,7 +25,7 @@ module Api
         car = Car.find_by(slug: params[:slug])
 
         if car.update(car_params)
-          render json: CarSerializer.new (car, options).serialized_json
+          render json: CarSerializer.new(car, options).serialized_json
         else
           render json: { error: car.errors.messages }, status: 422
         end
@@ -39,7 +37,7 @@ module Api
         if car.destroy
           head :no_content
         else
-          render json: { error: car.errors.messages }, status 422 
+          render json: { error: car.errors.messages }, status: 422
         end
       end
 
@@ -51,6 +49,7 @@ module Api
 
       def options
         @options ||= { include: %i[reviews] }
+      end
     end
   end
 end
