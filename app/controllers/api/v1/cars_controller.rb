@@ -2,6 +2,7 @@ module Api
   module V1
     class CarsController < ApplicationController
       protect_from_forgery with: :null_session
+      
       def index
         cars = Car.all
         render json: CarSerializer.new(cars, options).serialized_json
