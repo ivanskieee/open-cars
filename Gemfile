@@ -57,3 +57,6 @@ end
 
 
 gem "webpacker", "~> 5.4"
+
+gem 'react-rails'
+
